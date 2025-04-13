@@ -1,0 +1,14 @@
+🌙 Dark Theme Colors
+Variable	Color Value
+--p (Primary)	#661AE6 (Purple)
+--pc (Primary Content)	#FFFFFF (White)
+--s (Secondary)	#D926A9 (Pink)
+--sc (Secondary Content)	#FFFFFF (White)
+--a (Accent)	#1FB2A6 (Teal)
+--ac (Accent Content)	#FFFFFF (White)
+--n (Neutral)	#191D24 (Dark Gray)
+--nc (Neutral Content)	#A6ADBB (Light Gray)
+--b1 (Background 1)	#222831 (Very Dark Gray)
+--b2 (Background 2)	#191D24 (Dark Gray)
+--b3 (Background 3)	#13171E (Darker Gray)
+--bc (Border Color)	#2A2E37 (Gray)

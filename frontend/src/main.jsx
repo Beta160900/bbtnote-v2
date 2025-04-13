@@ -1,0 +1,24 @@
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Home } from "./pages/Home";
+import { Tech } from "./pages/Tech";
+import { Other } from "./pages/Other";
+import { M4 } from "./Pages/M4";
+import { M5 } from "./Pages/M5";
+import { M6 } from "./Pages/M6";
+import Auth from "./Auth.jsx";
+
+createRoot(document.getElementById("root")).render(
+  <Router>
+    <Routes>
+      <Route path="/" element={<Home />}></Route>
+      <Route path="/Tech" element={<Tech />}></Route>
+      <Route path="/Other" element={<Other />}></Route>
+      <Route path="/M4" element={<M4 />}></Route>
+      <Route path="/M5" element={<M5 />}></Route>
+      <Route path="/M6" element={<M6 />}></Route>
+      <Route path="/auth" element={<Auth />} />
+    </Routes>
+  </Router>
+);
