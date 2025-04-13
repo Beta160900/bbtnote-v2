@@ -1,9 +1,9 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Home } from "./pages/Home";
-import { Tech } from "./pages/Tech";
-import { Other } from "./pages/Other";
+import { Home } from "./Pages/Home";
+import { Tech } from "./Pages/Tech";
+import { Other } from "./Pages/Other";
 import { M4 } from "./Pages/M4";
 import { M5 } from "./Pages/M5";
 import { M6 } from "./Pages/M6";
