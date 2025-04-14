@@ -6,17 +6,16 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const Auth = () => {
   const [searchParams] = useSearchParams();
   const authorizationCode = searchParams.get("code");
-  const state = searchParams.get("state");
 
   useEffect(() => {
-    fetch(apiUrl + "/token?code=" + authorizationCode + "&state=" + state, {
+    fetch(apiUrl + "/token?code=" + authorizationCode, {
       credentials: "include",
     })
       .then((res) => {
         if (res.status === 200) window.location.href = "/";
       })
       .catch((err) => console.log(err));
-  });
+  }, [authorizationCode]); // Add dependency array
 
   return <div>Authenticating...</div>;
 };
