@@ -44,7 +44,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // List of allowed origins
-const allowedOrigins = ["https://bbtnote-v2-1.onrender.com"];
+const allowedOrigins = ["https://note.jinatta.com"];
 
 // CORS middleware
 const corsOptions = {
