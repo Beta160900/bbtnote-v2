@@ -3,6 +3,7 @@ import PdfFile from "./PdfFile";
 
 // eslint-disable-next-line react/prop-types
 function PdfContainer({ heading, folder }) {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [files, setFiles] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -13,7 +14,7 @@ function PdfContainer({ heading, folder }) {
   };
 
   const fetchFiles = () => {
-    fetch(`http://localhost:3000/file?subfolder=${folder}`)
+    fetch(`${apiUrl}/file?subfolder=${folder}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.files) {
@@ -40,13 +41,10 @@ function PdfContainer({ heading, folder }) {
 
     setIsUploading(true);
     try {
-      const response = await fetch(
-        `http://localhost:3000/upload-pdf?folder=${folder}`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch(`${apiUrl}/upload-pdf?folder=${folder}`, {
+        method: "POST",
+        body: formData,
+      });
 
       if (!response.ok) {
         throw new Error("Failed to upload file.");

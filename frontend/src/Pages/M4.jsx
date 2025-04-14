@@ -5,12 +5,14 @@ import Footer from "../Components/Footer";
 import Box from "../Components/SubjectBox";
 
 export function M4() {
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const headfolder = "M4";
   const [subfolders, setSubfolders] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/auth/check", {
+    fetch(`${apiUrl}/auth/check`, {
       credentials: "include",
     })
       .then((res) => res.json())
@@ -27,7 +29,7 @@ export function M4() {
   }, [navigate]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/folder?foldername=${headfolder}`)
+    fetch(`${apiUrl}/folder?foldername=${headfolder}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.subfolders) {

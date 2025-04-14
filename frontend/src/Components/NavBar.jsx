@@ -7,7 +7,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const Navbar = () => {
   const [auth, setAuth] = useState(null);
   useEffect(() => {
-    fetch("http://localhost:3000/auth/check", {
+    fetch(`${apiUrl}/auth/check`, {
       credentials: "include",
     })
       .then((res) => res.json()) // <-- this parses the response body

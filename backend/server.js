@@ -44,7 +44,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // List of allowed origins
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = ["https://bbtnote-v2-1.onrender.com"];
 
 // CORS middleware
 const corsOptions = {
