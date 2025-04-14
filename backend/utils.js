@@ -22,10 +22,8 @@ const verfiyJWT = (jwtToken, jwtSigningKey) => {
 }
 
 const getCurrentUrl = (req) => {
-    const currentUrl = process.env.COGNITO_CALLBACK_URL + req['_parsedUrl'].search;
-    return new URL(currentUrl)
+    // Just return the callback URL without adding query parameters
+    return new URL(process.env.COGNITO_CALLBACK_URL);
 }
-
-
 
 module.exports = { getCurrentUrl, verfiyJWT, getCognitoJWTPublicKey }

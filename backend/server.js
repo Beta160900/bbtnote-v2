@@ -92,13 +92,24 @@ app.get('/token', async (req, res) => {
         console.log("token sended");
 
         const { state, code_verifier } = req.signedCookies;
-
-        //console.log(state, code_verifier, config, getCurrentUrl(req));
+        const authorizationCode = req.query.code;
+        
+        if (!authorizationCode) {
+            return res.status(400).send({ error: "Missing authorization code" });
+        }
+        
+        if (!code_verifier) {
+            return res.status(400).send({ error: "Missing code_verifier" });
+        }
+        
+        // Use the callback URL directly
+        const callbackUrl = new URL(process.env.COGNITO_CALLBACK_URL);
         
         let tokens = await oidc.authorizationCodeGrant(
             config,
-            getCurrentUrl(req),
+            callbackUrl,
             {
+                code: authorizationCode,
                 pkceCodeVerifier: code_verifier,
                 expectedState: state,
             }
