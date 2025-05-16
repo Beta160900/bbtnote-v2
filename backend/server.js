@@ -11,7 +11,6 @@ const upload = require('./upload-s3.js');
 const { ListObjectsV2Command } = require('@aws-sdk/client-s3');
 const s3 = require('./client.js');
 
-
 global.jwtSigningKey;
 let config;
 let oidc;
@@ -21,6 +20,7 @@ async function initializeServer() {
         oidc = await import('openid-client');
         
         const serverUrl = new URL(`https://cognito-idp.${process.env.AWS_REGION}.amazonaws.com/${process.env.COGNITO_USER_POOL_ID}`);
+
         const clientId = process.env.COGNITO_CLIENT_ID;
         const clientSecret = process.env.COGNITO_CLIENT_SECRET;
         
@@ -44,7 +44,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // List of allowed origins
-const allowedOrigins = ["https://note.jinatta.com"];
+const allowedOrigins = [process.env.ORIGIN];
 
 // CORS middleware
 const corsOptions = {
@@ -63,7 +63,7 @@ app.use(authMiddleware);
 
 app.get('/login', async (req, res) => {
     try {
-        //console.log("login sended");
+        console.log("login sended");
         
         const code_verifier = oidc.randomPKCECodeVerifier();
         const code_challenge = await oidc.calculatePKCECodeChallenge(code_verifier);
@@ -92,24 +92,13 @@ app.get('/token', async (req, res) => {
         console.log("token sended");
 
         const { state, code_verifier } = req.signedCookies;
-        const authorizationCode = req.query.code;
-        
-        if (!authorizationCode) {
-            return res.status(400).send({ error: "Missing authorization code" });
-        }
-        
-        if (!code_verifier) {
-            return res.status(400).send({ error: "Missing code_verifier" });
-        }
-        
-        // Use the callback URL directly
-        const callbackUrl = new URL(process.env.COGNITO_CALLBACK_URL);
+
+        console.log(state, code_verifier, config, getCurrentUrl(req));
         
         let tokens = await oidc.authorizationCodeGrant(
             config,
-            callbackUrl,
+            getCurrentUrl(req),
             {
-                code: authorizationCode,
                 pkceCodeVerifier: code_verifier,
                 expectedState: state,
             }
@@ -128,16 +117,6 @@ app.get('/token', async (req, res) => {
     }
 });
 
-app.get('/todos', (req, res) => {
-    const todos = ["task1", "task2", "task3"];
-    const adminTodos = ["adminTask1", "admiTask2", "adminTask3"];
-    const isAdmin = JSON.parse(Buffer.from(req?.signedCookies?.ACCESS_TOKEN?.split('.')[1], 'base64')?.toString('utf8'))['cognito:groups']?.includes('Admin');
-    res.send(isAdmin ? adminTodos : todos);
-});
-//make group by group/attribute
-//in id token show group[admin]
-
-//new features
 app.get('/logout', (req, res) => {
     // Clear authentication-related cookies
     res.clearCookie('ACCESS_TOKEN');
@@ -153,22 +132,6 @@ app.get('/logout', (req, res) => {
     res.redirect(logoutUrl);
 });
 
-// app.get('/auth/check', (req, res) => {
-//     console.log("auth/check");
-//     try {
-//         const token = req.signedCookies.ACCESS_TOKEN;
-//         console.log(token);
-//         if (!token) return res.status(401).send({ authenticated: false });
-
-//         // Optionally, verify token structure or expiration here
-//         const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString('utf8'));
-
-//         res.send({ authenticated: true, user: payload });
-//     } catch (err) {
-//         console.error("Auth check error:", err);
-//         res.status(401).send({ authenticated: false });
-//     }
-// });
 app.get('/auth/check', (req, res) => {
     //console.log("/auth/check");
 
@@ -246,8 +209,6 @@ app.get('/file', async (req, res) => {
     }
 });
 
-
-// Initialize the server before starting to listen
 initializeServer()
   .then(() => {
     app.listen(port, () => {

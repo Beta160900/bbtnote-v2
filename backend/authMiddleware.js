@@ -1,6 +1,6 @@
 const { verfiyJWT } = require("./utils");
 
-const excludeAuthURLs = new Set(['/login', '/token','/auth/check','/folder','/file','/upload-pdf']) //unauthenticated
+const excludeAuthURLs = new Set(['/login', '/token','/auth/check','/folder','/file','/upload-pdf' ,'/logout']) //unauthenticated
 
 const authMiddleware = async (req, res, next) => {
     if (excludeAuthURLs.has(req.path)) {
