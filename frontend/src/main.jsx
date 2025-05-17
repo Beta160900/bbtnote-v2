@@ -8,6 +8,8 @@ import { M4 } from "./Pages/M4";
 import { M5 } from "./Pages/M5";
 import { M6 } from "./Pages/M6";
 import { Auth } from "./Auth";
+import { Test } from "./Test";
+import { Test2 } from "./Pages/Test2";
 
 createRoot(document.getElementById("root")).render(
   <Router>
@@ -19,6 +21,8 @@ createRoot(document.getElementById("root")).render(
       <Route path="/M5" element={<M5 />}></Route>
       <Route path="/M6" element={<M6 />}></Route>
       <Route path="/Auth" element={<Auth />} />
+      <Route path="/Test" element={<Test />} />
+      <Route path="/Test2" element={<Test2 />} />
     </Routes>
   </Router>
 );
