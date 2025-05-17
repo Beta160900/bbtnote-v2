@@ -111,7 +111,7 @@ app.get('/token', async (req, res) => {
         
         res.cookie('ACCESS_TOKEN', tokens.access_token, { httpOnly: true, signed: true, sameSite: 'None',secure: true });
         res.cookie('REFRESH_TOKEN', tokens.refresh_token, { httpOnly: true, signed: true, sameSite: 'None',secure: true });
-        res.cookie('ID_TOKEN', tokens.id_token);
+        res.cookie('ID_TOKEN', tokens.id_token, { sameSite: 'None', secure: true });
         res.clearCookie("state");
         res.clearCookie("code_verifier");
         res.send(tokens);
