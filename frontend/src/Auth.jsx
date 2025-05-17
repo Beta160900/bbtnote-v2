@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-const Auth = () => {
+export function Auth() {
   const [searchParams] = useSearchParams();
   const authorizationCode = searchParams.get("code");
   const state = searchParams.get("state");
@@ -19,6 +19,4 @@ const Auth = () => {
   });
 
   return <div>Authenticating...</div>;
-};
-
-export default Auth;
+}
