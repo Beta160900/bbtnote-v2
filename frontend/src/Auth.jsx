@@ -18,5 +18,11 @@ export function Auth() {
       .catch((err) => console.log(err));
   });
 
-  return <div>Authenticating...</div>;
+  return (
+    <>
+      <div>Authenticating...</div>
+      <p>{authorizationCode}</p>
+      <p>{state}</p>
+    </>
+  );
 }
