@@ -7,7 +7,7 @@ import { Other } from "./Pages/Other";
 import { M4 } from "./Pages/M4";
 import { M5 } from "./Pages/M5";
 import { M6 } from "./Pages/M6";
-import Auth from "./Auth.jsx";
+import Auth from "./Auth";
 
 createRoot(document.getElementById("root")).render(
   <Router>
@@ -18,7 +18,7 @@ createRoot(document.getElementById("root")).render(
       <Route path="/M4" element={<M4 />}></Route>
       <Route path="/M5" element={<M5 />}></Route>
       <Route path="/M6" element={<M6 />}></Route>
-      <Route path="/auth" element={<Auth />} />
+      <Route path="/Auth" element={<Auth />} />
     </Routes>
   </Router>
 );
