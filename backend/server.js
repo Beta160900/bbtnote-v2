@@ -79,8 +79,8 @@ app.get('/login', async (req, res) => {
         
         const congnitoLoginURL = oidc.buildAuthorizationUrl(config, parameters).href;
 
-        res.cookie('state', state, { sameSite: 'None',secure: true });
-        res.cookie('code_verifier', code_verifier, { sameSite: 'None',secure: true });
+        res.cookie('state', state, { httpOnly: true, signed: true, sameSite: 'None',secure: true });
+        res.cookie('code_verifier', code_verifier, { httpOnly: true, signed: true, sameSite: 'None',secure: true });
         res.send(JSON.stringify({ congnitoLoginURL }));
     } catch (err) {
         console.error("Error in /login:", err);
@@ -109,8 +109,8 @@ app.get('/token', async (req, res) => {
             }
         );
         
-        res.cookie('ACCESS_TOKEN', tokens.access_token, { sameSite: 'None',secure: true });
-        res.cookie('REFRESH_TOKEN', tokens.refresh_token, {  sameSite: 'None',secure: true });
+        res.cookie('ACCESS_TOKEN', tokens.access_token, { httpOnly: true, signed: true, sameSite: 'None',secure: true });
+        res.cookie('REFRESH_TOKEN', tokens.refresh_token, { httpOnly: true, signed: true, sameSite: 'None',secure: true });
         res.cookie('ID_TOKEN', tokens.id_token, { sameSite: 'None', secure: true });
         res.clearCookie("state");
         res.clearCookie("code_verifier");
