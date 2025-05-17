@@ -7,7 +7,7 @@ import { Other } from "./Pages/Other";
 import { M4 } from "./Pages/M4";
 import { M5 } from "./Pages/M5";
 import { M6 } from "./Pages/M6";
-import Auth from "./Auth";
+import { Auth } from "./Auth";
 
 createRoot(document.getElementById("root")).render(
   <Router>
