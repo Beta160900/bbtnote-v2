@@ -44,11 +44,12 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // List of allowed origins
-const allowedOrigins = [process.env.ORIGIN];
+const allowedOrigins = [process.env.ORIGIN,'https://bbtnote-v2.onrender.com'];
 
 // CORS middleware
 const corsOptions = {
     origin: allowedOrigins,
+    credentials: true,
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type", "Authorization", "X-Custom-Header"],
     credentials: true,
@@ -78,8 +79,8 @@ app.get('/login', async (req, res) => {
         
         const congnitoLoginURL = oidc.buildAuthorizationUrl(config, parameters).href;
 
-        res.cookie('state', state, { httpOnly: true, signed: true });
-        res.cookie('code_verifier', code_verifier, { httpOnly: true, signed: true });
+        res.cookie('state', state, { httpOnly: true, signed: true, sameSite: 'None',secure: true });
+        res.cookie('code_verifier', code_verifier, { httpOnly: true, signed: true, sameSite: 'None',secure: true });
         res.send(JSON.stringify({ congnitoLoginURL }));
     } catch (err) {
         console.error("Error in /login:", err);
@@ -108,8 +109,8 @@ app.get('/token', async (req, res) => {
             }
         );
         
-        res.cookie('ACCESS_TOKEN', tokens.access_token, { httpOnly: true, signed: true });
-        res.cookie('REFRESH_TOKEN', tokens.refresh_token, { httpOnly: true, signed: true });
+        res.cookie('ACCESS_TOKEN', tokens.access_token, { httpOnly: true, signed: true, sameSite: 'None',secure: true });
+        res.cookie('REFRESH_TOKEN', tokens.refresh_token, { httpOnly: true, signed: true, sameSite: 'None',secure: true });
         res.cookie('ID_TOKEN', tokens.id_token);
         res.clearCookie("state");
         res.clearCookie("code_verifier");
