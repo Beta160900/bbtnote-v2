@@ -144,6 +144,8 @@ app.get('/auth/check', (req, res) => {
         // Check if the ID_TOKEN cookie is present and signed correctly
         const idToken = req.signedCookies.ID_TOKEN || req.cookies.ID_TOKEN; // Check both signed and non-signed
 
+        console.log("token id:"+idToken);
+        
         //console.log("ID Token:", idToken);
 
         if (!idToken) return res.status(401).send({ authenticated: false });
