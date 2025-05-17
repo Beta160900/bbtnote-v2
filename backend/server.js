@@ -93,7 +93,11 @@ app.get('/token', async (req, res) => {
 
         const { state, code_verifier } = req.signedCookies;
 
-        console.log(state, code_verifier, config, getCurrentUrl(req));
+        console.log("state : "+state);
+        console.log("code_verifier : "+code_verifier);
+        console.log("config : "+config);
+        console.log("currectUrl : "+getCurrentUrl(req));
+
         
         let tokens = await oidc.authorizationCodeGrant(
             config,
